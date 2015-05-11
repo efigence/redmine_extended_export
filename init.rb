@@ -8,3 +8,7 @@ Redmine::Plugin.register :redmine_export_subtasks do
 end
 
 require 'redmine_export_subtasks/hooks/show_issue_hook'
+
+ActionDispatch::Callbacks.to_prepare do
+  IssueQuery.send(:include, RedmineExportSubtasks::Patches::IssueQueryPatch)
+end
