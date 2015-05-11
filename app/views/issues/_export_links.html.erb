@@ -1,0 +1,41 @@
+<div id="subtasks-export">
+  <% other_formats_links do |f| %>
+    <%= f.link_to 'Atom', :url => params.merge(:key => User.current.rss_key) %>
+    <%= f.link_to 'CSV', :url => params, :onclick => "showModal('csv-export-options', '350px'); return false;" %>
+    <%= f.link_to 'XLSX', :url => params, :onclick => "showModal('xlsx-export-options', '350px'); return false;" %>
+    <%= f.link_to 'PDF', :url => params %>
+  <% end %>
+</div>
+
+<div id="csv-export-options" style="display:none;">
+  <h3 class="title"><%= l(:label_export_options, :export_format => 'CSV') %></h3>
+  <%= form_tag url_for(:controller => :subtask_export, :action => :index, :format => 'csv', :type => 'subtasks'), :method => :get, :id => 'csv-export-form' do %>
+  <p>
+    <label><%= check_box_tag 'description', '1'%> <%= l(:field_description) %></label>
+    <label><%= check_box_tag 'comments', '1' %> <%= l(:field_comments) %></label>
+  </p>
+  <p class="buttons">
+    <%= submit_tag l(:button_export), :name => nil, :onclick => "hideModal(this);" %>
+    <%= submit_tag l(:button_cancel), :name => nil, :onclick => "hideModal(this);", :type => 'button' %>
+  </p>
+  <% end %>
+</div>
+
+<div id="xlsx-export-options" style="display:none;">
+  <h3 class="title"><%= l(:label_export_options, :export_format => 'XLSX') %></h3>
+  <%= form_tag url_for(:controller => :subtask_export, :action => :index, :format => 'xlsx', :type => 'subtasks'), :method => :get, :id => 'xlsx-export-form' do %>
+  <p>
+    <label><%= check_box_tag 'description', '1'%> <%= l(:field_description) %></label>
+    <label><%= check_box_tag 'comments', '1' %> <%= l(:field_comments) %></label>
+  </p>
+  <p class="buttons">
+    <%= submit_tag l(:button_export), :name => nil, :onclick => "hideModal(this);" %>
+    <%= submit_tag l(:button_cancel), :name => nil, :onclick => "hideModal(this);", :type => 'button' %>
+  </p>
+  <% end %>
+</div>
+
+<% content_for :header_tags do %>
+  <%= javascript_include_tag 'issues_export.js', :plugin => 'redmine_export_subtasks' %>
+  <%= stylesheet_link_tag 'issues_export.css', :plugin => 'redmine_export_subtasks' %>
+<% end %>
