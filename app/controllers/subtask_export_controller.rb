@@ -1,9 +1,7 @@
 class SubtaskExportController < ApplicationController
   unloadable
 
-  include SortHelper
   include QueriesHelper
-  include ::Redmine::Export::PDF # TODO
 
   before_action :find_issue
   before_action :set_query
