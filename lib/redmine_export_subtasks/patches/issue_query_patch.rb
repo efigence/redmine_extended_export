@@ -7,6 +7,7 @@ module RedmineExportSubtasks
         base.send(:include, InstanceMethods)
         base.class_eval do
           unloadable
+          available_columns << QueryColumn.new(:comments, :inline => false)
         end
       end
 
