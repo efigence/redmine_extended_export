@@ -1,6 +1,6 @@
 require_dependency 'issue'
 
-module RedmineExportSubtasks
+module RedmineExtendedExport
   module Patches
     module IssuePatch
 

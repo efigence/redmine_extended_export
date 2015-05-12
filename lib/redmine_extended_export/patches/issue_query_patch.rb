@@ -1,6 +1,6 @@
 require_dependency 'issue_query'
 
-module RedmineExportSubtasks
+module RedmineExtendedExport
   module Patches
     module IssueQueryPatch
       def self.included(base)

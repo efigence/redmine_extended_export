@@ -1,6 +1,6 @@
 require_dependency 'queries_helper'
 
-module RedmineExportSubtasks
+module RedmineExtendedExport
   module Patches
     module QueriesHelperPatch
 

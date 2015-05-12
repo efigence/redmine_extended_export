@@ -1,6 +1,6 @@
 require_dependency 'issues_controller'
 
-module RedmineExportSubtasks
+module RedmineExtendedExport
   module Patches
     module IssuesControllerPatch
       def self.included(base)
