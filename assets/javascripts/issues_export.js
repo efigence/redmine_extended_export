@@ -3,6 +3,6 @@ $(function(){
 
   if ( $('#related-export').length > 0 ) {
     $('#relations').css("margin-bottom", "18px");
-    $('#relations').append( $('#related-export') );
+    $('#relations table.list').after( $('#related-export') );
   }
 });

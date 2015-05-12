@@ -1,0 +1,5 @@
+$('#relation-<%= @relation.id %>').remove();
+
+if ( $('#relations table.list tr').length == 0 ) {
+  $('#related-export').hide();
+}
