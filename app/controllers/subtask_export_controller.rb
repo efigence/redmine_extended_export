@@ -8,8 +8,21 @@ class SubtaskExportController < ApplicationController
 
   def subtasks
     descendant_ids = @issue.descendants.visible.pluck(:id)
+    respond_with_data(descendant_ids, :lft)
+  end
 
-    @query.build_from_params_with_issue_ids(descendant_ids)
+  def related
+    related_ids = @issue.relations.
+      select { |r| r.other_issue(@issue) && r.other_issue(@issue).visible? }.
+      map    { |r| r.other_issue(@issue).id }
+
+    respond_with_data(related_ids, :id)
+  end
+
+  private
+
+  def respond_with_data(issue_ids, order)
+    @query.build_from_params_with_issue_ids(issue_ids)
 
     @limit = Setting.issues_export_limit.to_i
     @query.column_names = @query.available_inline_columns.map(&:name)
@@ -18,7 +31,7 @@ class SubtaskExportController < ApplicationController
     @issue_pages = Paginator.new @issue_count, @limit, params['page']
     @offset ||= @issue_pages.offset
     @issues = @query.issues(:include => [:assigned_to, :tracker, :priority, :category, :fixed_version],
-                            :order => :lft,
+                            :order => order,
                             :offset => @offset,
                             :limit => @limit)
 
@@ -31,12 +44,6 @@ class SubtaskExportController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     render_404
   end
-
-  def related
-    # TODO
-  end
-
-  private
 
   def find_issue
     @issue = Issue.find(params[:id])
