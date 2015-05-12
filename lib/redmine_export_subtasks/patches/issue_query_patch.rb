@@ -7,7 +7,6 @@ module RedmineExportSubtasks
         base.send(:include, InstanceMethods)
         base.class_eval do
           unloadable
-          alias_method_chain :build_from_params, :issue_ids
         end
       end
 
@@ -21,13 +20,12 @@ module RedmineExportSubtasks
           end
         end
 
-        def add_issue_ids_filter(issue_ids)
-          filters[:issue_ids] = {:values => issue_ids}
+        def build_from_params_with_issue_ids(issue_ids)
+          add_issue_ids_filter(issue_ids)
         end
 
-        def build_from_params_with_issue_ids(params)
-          add_issue_ids_filter(params[:issue_ids]) if params[:issue_ids]
-          build_from_params_without_issue_ids(params)
+        def add_issue_ids_filter(issue_ids)
+          filters[:issue_ids] = {:values => issue_ids}
         end
       end
     end

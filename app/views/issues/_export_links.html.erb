@@ -1,6 +1,6 @@
 <div id="subtasks-export">
   <% other_formats_links do |f| %>
-    <%= f.link_to 'Atom', :url => params.merge(:key => User.current.rss_key) %>
+    <%#= f.link_to 'Atom', :url => params.merge(:key => User.current.rss_key) %>
     <%= f.link_to 'CSV', :url => {}, :onclick => "showModal('csv-export-options', '350px'); return false;" %>
     <%= f.link_to 'XLSX', :url => {}, :onclick => "showModal('xlsx-export-options', '350px'); return false;" %>
     <%= f.link_to 'PDF', :url => {controller: 'subtask_export', action: 'subtasks', format: 'pdf'} %>
