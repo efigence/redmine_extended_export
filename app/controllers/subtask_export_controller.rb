@@ -22,6 +22,9 @@ class SubtaskExportController < ApplicationController
   private
 
   def respond_with_data(issue_ids, order)
+
+    return head :not_acceptable if issue_ids.blank?
+
     @query.build_from_params_with_issue_ids(issue_ids)
 
     @limit = Setting.issues_export_limit.to_i
