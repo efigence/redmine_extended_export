@@ -17,7 +17,7 @@ script:
   - export PATH_TO_PLUGIN=$(pwd)
   - export PATH_TO_REDMINE=$WORKSPACE/redmine
   - export BUNDLE_PATH=$(pwd)/vendor/bundle
-  - mkdir $WORKSPACE
+  - mkdir -p $WORKSPACE
   - bash -x ./.travis-init.sh -r || exit 1
   - bash -x ./.travis-init.sh -i || exit 1
   - bash -x ./.travis-init.sh -t || exit 1
