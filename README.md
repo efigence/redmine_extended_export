@@ -1,4 +1,4 @@
-# Redmine Extended Export plugin
+# Redmine Extended Export plugin [![Build Status](https://travis-ci.org/efigence/redmine_extended_export.svg?branch=master)](https://travis-ci.org/efigence/redmine_extended_export)
 
 #### Plugin which gives extended issue exporting functionalties:
 
