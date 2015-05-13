@@ -1,0 +1,31 @@
+---
+language: ruby
+cache:
+  apt: true
+  bundler: true
+  directories:
+    - vendor/bundle
+    - workspace/redmine/vendor/bundle
+rvm:
+  - 1.9
+  - 2.0
+  - 2.1
+  - 2.2
+env:
+  - REDMINE_VERSION=2.4.7 VERBOSE=no DB=mysql
+  - REDMINE_VERSION=2.5.3 VERBOSE=no DB=mysql
+  - REDMINE_VERSION=2.6.2 VERBOSE=no DB=mysql
+  - REDMINE_VERSION=3.0.3 VERBOSE=no DB=mysql
+script:
+  - export PLUGIN=redmine_extended_export
+  - export WORKSPACE=$(pwd)/workspace
+  - export PATH_TO_PLUGIN=$(pwd)
+  - export PATH_TO_REDMINE=$WORKSPACE/redmine
+  - export BUNDLE_PATH=$(pwd)/vendor/bundle
+  - mkdir $WORKSPACE
+  - bash -x ./.travis-init.sh -r || exit 1
+  - bash -x ./.travis-init.sh -i || exit 1
+  - bash -x ./.travis-init.sh -t || exit 1
+  - bash -x ./.travis-init.sh -u || exit 1
+before_script:
+  - mysql -e 'create database redmine_extended_export_test;'
