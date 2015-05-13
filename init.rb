@@ -7,8 +7,6 @@ Redmine::Plugin.register :redmine_extended_export do
   author_url 'http://efigence.com'
 end
 
-
-
 ActionDispatch::Callbacks.to_prepare do
   require_relative 'config/initializers/mime'
   require 'redmine_extended_export/hooks/show_issue_hook'
