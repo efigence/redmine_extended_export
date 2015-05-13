@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 Redmine::Plugin.register :redmine_extended_export do
   name 'Redmine Extended Export plugin'
   author 'Rafał Lisowski, Jacek Grzybowski'
