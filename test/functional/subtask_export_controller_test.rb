@@ -11,8 +11,8 @@ class SubtaskExportControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal "text/csv; header=present", response.content_type
     assert response.body.starts_with?("#,")
-    issues(:root).descendants.pluck(:subject).each do |subject|
-      assert response.body.include? subject
+    issues(:root).descendants.visible.pluck(:subject).each do |subject|
+      assert response.body.include?(subject), "subject not included"
     end
   end
 

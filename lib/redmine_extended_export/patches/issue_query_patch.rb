@@ -14,8 +14,8 @@ module RedmineExtendedExport
       module InstanceMethods
         def statement
           if filters.key? :issue_ids
-            issue_ids_str = filters[:issue_ids][:values].join(', ')
-            return "#{Issue.table_name}.id IN (#{issue_ids_str})"
+            ids_to_string = filters[:issue_ids][:values].join(', ')
+            ids_to_string.present? ? "#{Issue.table_name}.id IN (#{ids_to_string})" : "1=0"
           else
             super
           end
