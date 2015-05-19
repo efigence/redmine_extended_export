@@ -95,15 +95,6 @@ module Redmine
           pdf.output
         end
 
-        def is_cjk?
-          case current_language.to_s.downcase
-          when 'ja', 'zh-tw', 'zh', 'ko'
-            true
-          else
-            false
-          end
-        end
-
         # calculate columns width
         def calc_col_timelog_width(entries, query, table_width, pdf)
           # calculate statistics
@@ -242,25 +233,6 @@ module Redmine
           col_values.each_with_index do |column, i|
             pdf.RDMMultiCell(col_widths[i], row_height, head ? column.caption : column.strip, 1, '', 1, 0)
           end
-        end
-
-        # Draw lines to close the row (MultiCell border drawing in not uniform)
-        #
-        #  parameter "col_id_width" is not used. it is kept for compatibility.
-        def issues_to_pdf_draw_borders(pdf, top_x, top_y, lower_y,
-                                       col_id_width, col_widths, rtl=false)
-          col_x = top_x
-          pdf.line(col_x, top_y, col_x, lower_y)    # id right border
-          col_widths.each do |width|
-            if rtl
-              col_x -= width
-            else
-              col_x += width
-            end
-            pdf.line(col_x, top_y, col_x, lower_y)  # columns right border
-          end
-          pdf.line(top_x, top_y, top_x, lower_y)    # left border
-          pdf.line(top_x, lower_y, col_x, lower_y)  # bottom border
         end
       end
     end
