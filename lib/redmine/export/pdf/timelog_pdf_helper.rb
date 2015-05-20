@@ -24,7 +24,7 @@ module Redmine
          # Returns a PDF string of a list of issues
         def timelog_to_pdf(entries, project, query)
           pdf = ITCPDF.new(current_language, "L")
-          title = query.new_record? ? l(:label_issue_plural) : query.name
+          title = query.new_record? ? l(:label_time_entry_plural) : query.name
           title = "#{project} - #{title}" if project
           pdf.set_title(title)
           pdf.alias_nb_pages
