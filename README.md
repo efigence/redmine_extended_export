@@ -5,6 +5,7 @@
 * export issues to `xlsx` format
 * export subtasks and related issues ( `xlsx`, `csv` and `pdf`)
 * export comments to a separate column (in `xlsx` and `csv`)
+* export timelog (time entries) to more formats (`xlsx` and `pdf` added)
 
 ## Requirements
 
@@ -25,6 +26,10 @@ Developed and tested on Redmine 3.0.1.
 ##### Single issue page
 
 * If any subtasks and/or related issues exist, you'll see export links under the list.
+
+##### Timelog page
+
+* Export to `xlsx` and `pdf` formats available now.
 
 ## License
 
