@@ -1,3 +1,6 @@
 # English strings go here for Rails i18n
 en:
-  # my_label: "My label"
+  field_spent_hours: Spent hours
+  field_total_spent_hours: Total spent hours
+  field_relations: Relations
+  field_without_statuses: Without issues with status

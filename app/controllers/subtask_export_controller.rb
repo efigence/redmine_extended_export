@@ -26,9 +26,17 @@ class SubtaskExportController < ApplicationController
     return head :not_acceptable if issue_ids.blank?
 
     @query.build_from_params_with_issue_ids(issue_ids)
+    @query.filters[:issue_ids][:values] -= check_statuses(@query.filters[:issue_ids][:values]) if params[:format] != 'pdf'
 
     @limit = Setting.issues_export_limit.to_i
+
     @query.column_names = @query.available_inline_columns.map(&:name)
+    if params[:format] != 'pdf'
+      @query.column_names -= check_parameters
+      unless @query.column_names.include?(:id)
+        @query.column_names.unshift('id')
+      end
+    end
 
     @issue_count = @query.issue_count
     @issue_pages = Paginator.new @issue_count, @limit, params['page']
@@ -37,6 +45,7 @@ class SubtaskExportController < ApplicationController
                             :order => order,
                             :offset => @offset,
                             :limit => @limit)
+                            # binding.pry
 
     respond_to do |format|
       format.csv  { send_data(query_to_csv(@issues, @query, params), :type => 'text/csv; header=present', :filename => 'issues.csv') }
@@ -55,5 +64,20 @@ class SubtaskExportController < ApplicationController
 
   def set_query
     @query = IssueQuery.new
+  end
+
+  def check_parameters
+    params_array = @query.available_inline_columns.map(&:name) - [:id]
+    params_array.map { |parameter| parameter if params[parameter] != '1' }
+  end
+
+  def check_statuses(issues_ids_array)
+    output = []
+    IssueStatus.all.each do |statuss|
+      if params["status_#{statuss.id}".to_sym] == '1'
+        output += Issue.where(status_id: statuss.id).map(&:id)
+      end
+    end
+    output
   end
 end
