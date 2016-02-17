@@ -7,20 +7,29 @@ module RedmineExtendedExport
         base.send(:include, InstanceMethods)
         base.class_eval do
           unloadable
+          alias_method_chain :index, :csv
           alias_method_chain :index, :xlsx
         end
       end
 
       module InstanceMethods
+        def index_with_csv
+          if params[:format] == 'csv'
+            respond_with_xlsx_or_csv
+          else
+            index_without_csv
+          end
+        end
+
         def index_with_xlsx
           if params[:format] == 'xlsx'
-            respond_with_xlsx
+            respond_with_xlsx_or_csv
           else
             index_without_xlsx
           end
         end
 
-        def respond_with_xlsx
+        def respond_with_xlsx_or_csv
           retrieve_query
           sort_init(@query.sort_criteria.empty? ? [['id', 'desc']] : @query.sort_criteria)
           sort_update(@query.sortable_columns)
@@ -41,6 +50,7 @@ module RedmineExtendedExport
           @issue_count_by_group = @query.issue_count_by_group
 
           respond_to do |format|
+            format.csv  { send_data(query_to_csv(@issues, @query, params), :type => 'text/csv; header=present', :filename => 'issues.csv') }
             format.xlsx { send_data(query_to_xlsx(@issues, @query, params), :type => 'application/xlsx', :filename => 'issues.xlsx') }
           end
         rescue ActiveRecord::RecordNotFound

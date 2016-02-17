@@ -7,10 +7,10 @@ class SubtaskExportControllerTest < ActionController::TestCase
   end
 
   test "should get proper subtasks in csv" do
-    get :subtasks, id: 1, format: 'csv'
+    get :subtasks, id: 1, format: 'csv', subject: '1'
     assert_response :success
     assert_equal "text/csv; header=present", response.content_type
-    assert response.body.starts_with?("#,")
+    assert response.body.starts_with?("#")
     issues(:root).descendants.visible.pluck(:subject).each do |subject|
       assert response.body.include?(subject), "subject not included"
     end
@@ -44,10 +44,10 @@ class SubtaskExportControllerTest < ActionController::TestCase
   end
 
   test "should get proper related tasks in csv" do
-    get :related, id: 5, format: 'csv'
+    get :related, id: 5, format: 'csv', subject: '1'
     assert_response :success
     assert_equal "text/csv; header=present", response.content_type
-    assert response.body.starts_with?("#,")
+    assert response.body.starts_with?("#")
     assert response.body.include? issues(:related).subject
   end
 

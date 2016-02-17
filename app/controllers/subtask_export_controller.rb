@@ -45,7 +45,6 @@ class SubtaskExportController < ApplicationController
                             :order => order,
                             :offset => @offset,
                             :limit => @limit)
-                            # binding.pry
 
     respond_to do |format|
       format.csv  { send_data(query_to_csv(@issues, @query, params), :type => 'text/csv; header=present', :filename => 'issues.csv') }

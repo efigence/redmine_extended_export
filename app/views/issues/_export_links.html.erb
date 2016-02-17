@@ -1,3 +1,4 @@
+<% @query_column_names = @query.try(:available_inline_columns) || [] %>
 <% unless @issue.leaf? %>
   <div id="subtasks-export">
     <% other_formats_links do |f| %>
@@ -11,7 +12,7 @@
     <h3 class="title"><%= l(:label_export_options, :export_format => 'CSV') %></h3>
     <%= form_tag issue_subtasks_export_path(format: 'csv'), :method => :get, :id => 'csv-subtasks-export-form' do %>
     <p>
-      <% (@query.available_inline_columns.map(&:name) - [:id]).each do |parameter| %>
+      <% (@query_column_names.map(&:name) - [:id]).each do |parameter| %>
         <label><%= check_box_tag parameter.to_s, '1', checked: 'checked' %> <%= l("field_#{parameter}".to_sym) %></label>
         <br>
       <% end %>
@@ -33,7 +34,7 @@
     <h3 class="title"><%= l(:label_export_options, :export_format => 'XLSX') %></h3>
     <%= form_tag issue_subtasks_export_path(format: 'xlsx'), :method => :get, :id => 'xlsx-subtasks-export-form' do %>
     <p>
-      <% (@query.available_inline_columns.map(&:name) - [:id]).each do |parameter| %>
+      <% (@query_column_names.map(&:name) - [:id]).each do |parameter| %>
         <label><%= check_box_tag parameter.to_s, '1', checked: 'checked' %> <%= l("field_#{parameter}".to_sym) %></label>
         <br>
       <% end %>
@@ -64,7 +65,7 @@
   <h3 class="title"><%= l(:label_export_options, :export_format => 'CSV') %></h3>
   <%= form_tag issue_related_export_path(format: 'csv'), :method => :get, :id => 'csv-related-export-form' do %>
   <p>
-    <% (@query.available_inline_columns.map(&:name) - [:id]).each do |parameter| %>
+    <% (@query_column_names.map(&:name) - [:id]).each do |parameter| %>
       <label><%= check_box_tag parameter.to_s, '1', checked: 'checked' %> <%= l("field_#{parameter}".to_sym) %></label>
       <br>
     <% end %>
@@ -86,7 +87,7 @@
   <h3 class="title"><%= l(:label_export_options, :export_format => 'XLSX') %></h3>
   <%= form_tag issue_related_export_path(format: 'xlsx'), :method => :get, :id => 'xlsx-related-export-form' do %>
   <p>
-    <% (@query.available_inline_columns.map(&:name) - [:id]).each do |parameter| %>
+    <% (@query_column_names.map(&:name) - [:id]).each do |parameter| %>
       <label><%= check_box_tag parameter.to_s, '1', checked: 'checked' %> <%= l("field_#{parameter}".to_sym) %></label>
       <br>
     <% end %>
