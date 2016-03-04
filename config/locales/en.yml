@@ -3,4 +3,9 @@ en:
   field_spent_hours: Spent hours
   field_total_spent_hours: Total spent hours
   field_relations: Relations
-  field_without_statuses: Without issues with status
+  field_without_statuses: Without issues with statuses
+  field_which_columns: Select columns
+
+  services:
+    selectize_all: Select all
+    deselectize_all: Deselect all

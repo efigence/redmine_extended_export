@@ -1,4 +1,7 @@
-<% @query_column_names = @query.try(:available_inline_columns) || [] %>
+<%= stylesheet_link_tag '/plugin_assets/redmine_extended_export/stylesheets/selectize.default.css' %>
+<%= javascript_include_tag '/plugin_assets/redmine_extended_export/javascripts/selectize' %>
+
+<% @query_column_names = @issue.attribute_names.map { |m| m.gsub('_id', '') } || [] %>
 <% unless @issue.leaf? %>
   <div id="subtasks-export">
     <% other_formats_links do |f| %>
@@ -12,16 +15,16 @@
     <h3 class="title"><%= l(:label_export_options, :export_format => 'CSV') %></h3>
     <%= form_tag issue_subtasks_export_path(format: 'csv'), :method => :get, :id => 'csv-subtasks-export-form' do %>
     <p>
-      <% (@query_column_names.map(&:name) - [:id]).each do |parameter| %>
-        <label><%= check_box_tag parameter.to_s, '1', checked: 'checked' %> <%= l("field_#{parameter}".to_sym) %></label>
-        <br>
-      <% end %>
+      <span><%= l(:field_which_columns) %></span>
+      <%= select_tag "columns",
+          options_for_select(@query_column_names - ['id']),
+          :multiple => true, class: "selectize" %>
       <label><%= check_box_tag 'description', '1'%> <%= l(:field_description) %></label>
       <label><%= check_box_tag 'comments', '1' %> <%= l(:field_comments) %></label>
-      <br><%= "#{l(:field_without_statuses)}:" %><br>
-      <% IssueStatus.all.each do |statuss| %>
-        <label><%= check_box_tag "status_#{statuss.id}", '1' %> <%= statuss.name %></label>
-      <% end %>
+      <br><br><%= "#{l(:field_without_statuses)}:" %>
+      <%= select_tag "statuses",
+          options_for_select(IssueStatus.all),
+          :multiple => true, class: "selectize" %>
     </p>
     <p class="buttons">
       <%= submit_tag l(:button_export), :name => nil, :onclick => "hideModal(this);" %>
@@ -34,16 +37,16 @@
     <h3 class="title"><%= l(:label_export_options, :export_format => 'XLSX') %></h3>
     <%= form_tag issue_subtasks_export_path(format: 'xlsx'), :method => :get, :id => 'xlsx-subtasks-export-form' do %>
     <p>
-      <% (@query_column_names.map(&:name) - [:id]).each do |parameter| %>
-        <label><%= check_box_tag parameter.to_s, '1', checked: 'checked' %> <%= l("field_#{parameter}".to_sym) %></label>
-        <br>
-      <% end %>
+      <span><%= l(:field_which_columns) %></span>
+      <%= select_tag "columns",
+          options_for_select(@query_column_names - ['id']),
+          :multiple => true, class: "selectize" %>
       <label><%= check_box_tag 'description', '1' %> <%= l(:field_description) %></label>
       <label><%= check_box_tag 'comments', '1' %> <%= l(:field_comments) %></label>
-      <br><%= "#{l(:field_without_statuses)}:" %><br>
-      <% IssueStatus.all.each do |statuss| %>
-        <label><%= check_box_tag "status_#{statuss.id}", '1' %> <%= statuss.name %></label>
-      <% end %>
+      <br><br><%= "#{l(:field_without_statuses)}:" %>
+      <%= select_tag "statuses",
+          options_for_select(IssueStatus.all),
+          :multiple => true, class: "selectize" %>
     </p>
     <p class="buttons">
       <%= submit_tag l(:button_export), :name => nil, :onclick => "hideModal(this);" %>
@@ -64,17 +67,17 @@
 <div id="csv-related-export-options" style="display:none;">
   <h3 class="title"><%= l(:label_export_options, :export_format => 'CSV') %></h3>
   <%= form_tag issue_related_export_path(format: 'csv'), :method => :get, :id => 'csv-related-export-form' do %>
-  <p>
-    <% (@query_column_names.map(&:name) - [:id]).each do |parameter| %>
-      <label><%= check_box_tag parameter.to_s, '1', checked: 'checked' %> <%= l("field_#{parameter}".to_sym) %></label>
-      <br>
-    <% end %>
+  <p><span></span>
+    <span><%= l(:field_which_columns) %></span>
+    <%= select_tag "columns",
+        options_for_select(@query_column_names - ['id']),
+        :multiple => true, class: "selectize" %>
     <label><%= check_box_tag 'description', '1'%> <%= l(:field_description) %></label>
     <label><%= check_box_tag 'comments', '1' %> <%= l(:field_comments) %></label>
-    <br><%= "#{l(:field_without_statuses)}:" %><br>
-    <% IssueStatus.all.each do |statuss| %>
-      <label><%= check_box_tag "status_#{statuss.id}", '1' %> <%= statuss.name %></label>
-    <% end %>
+    <br><br><%= "#{l(:field_without_statuses)}:" %>
+    <%= select_tag "statuses",
+        options_for_select(IssueStatus.all),
+        :multiple => true, class: "selectize" %>
   </p>
   <p class="buttons">
     <%= submit_tag l(:button_export), :name => nil, :onclick => "hideModal(this);" %>
@@ -86,17 +89,17 @@
 <div id="xlsx-related-export-options" style="display:none;">
   <h3 class="title"><%= l(:label_export_options, :export_format => 'XLSX') %></h3>
   <%= form_tag issue_related_export_path(format: 'xlsx'), :method => :get, :id => 'xlsx-related-export-form' do %>
-  <p>
-    <% (@query_column_names.map(&:name) - [:id]).each do |parameter| %>
-      <label><%= check_box_tag parameter.to_s, '1', checked: 'checked' %> <%= l("field_#{parameter}".to_sym) %></label>
-      <br>
-    <% end %>
+  <p id="wstaw-all">
+    <span><%= l(:field_which_columns) %></span>
+    <%= select_tag "columns",
+        options_for_select(@query_column_names - ['id']),
+        :multiple => true, class: "selectize" %>
     <label><%= check_box_tag 'description', '1'%> <%= l(:field_description) %></label>
     <label><%= check_box_tag 'comments', '1' %> <%= l(:field_comments) %></label>
-    <br><%= "#{l(:field_without_statuses)}:" %><br>
-    <% IssueStatus.all.each do |statuss| %>
-      <label><%= check_box_tag "status_#{statuss.id}", '1' %> <%= statuss.name %></label>
-    <% end %>
+    <br><br><%= l(:field_without_statuses) %>
+    <%= select_tag "statuses",
+        options_for_select(IssueStatus.all),
+        :multiple => true, class: "selectize" %>
   </p>
   <p class="buttons">
     <%= submit_tag l(:button_export), :name => nil, :onclick => "hideModal(this);" %>
@@ -109,3 +112,42 @@
   <%= javascript_include_tag 'issues_export.js', :plugin => 'redmine_extended_export' %>
   <%= stylesheet_link_tag 'issues_export.css', :plugin => 'redmine_extended_export' %>
 <% end %>
+
+<script type="text/javascript">
+  Selectize.define('selectize_all', function(options) {
+    var self;
+    self = this;
+    self.plugins.settings.dropdown_header = {
+      title: "<%= I18n.t("services.selectize_all") %>"
+    };
+    this.require('dropdown_header');
+    self.setup = (function() {
+      var original;
+      original = self.setup;
+      return function() {
+        original.apply(this, arguments);
+        self.setValue(Object.keys(self.options));
+        this.$dropdown.on('mousedown', '.selectize-dropdown-header', function(e) {
+          self.setValue(Object.keys(self.options));
+          self.refreshItems(self.$dropdown);
+        });
+      };
+    })();
+  });
+
+  $(document).ready(function(){
+    $('.selectize').each(function(index) {
+      $select = $(this).selectize({ plugins: ['remove_button', 'selectize_all'] });
+      $(this).before("<a href=\"javascript:void(0);\" id=\"des-" + index + "\" style=\"float:right;z-index:999;\"><%= I18n.t("services.deselectize_all") %></a>");
+      if(index % 2 == 1) {
+        $('#des-' + index).next('.selectize')[0].selectize.clear();
+      }
+      $('#des-' + index).click(function() {
+        s = $(this).next('.selectize');
+        deselectize = s[0].selectize;
+        deselectize.clear();
+        deselectize.refreshItems(deselectize.$dropdown);
+      });
+    });
+  });
+</script>

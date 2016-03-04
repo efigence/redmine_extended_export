@@ -2,4 +2,9 @@ pl:
   field_spent_hours: Przepracowany czas
   field_total_spent_hours: Całkowity przepracowany czas
   field_relations: Powiązane zagadnienia
-  field_without_statuses: Pominąć ze statusem
+  field_without_statuses: Pominąć zadania ze statusami
+  field_which_columns: Wybierz kolumny
+
+  services:
+    selectize_all: Wybierz wszystkie
+    deselectize_all: Wyczyść
