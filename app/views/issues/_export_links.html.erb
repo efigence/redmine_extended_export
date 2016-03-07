@@ -17,7 +17,7 @@
     <p>
       <span><%= l(:field_which_columns) %></span>
       <%= select_tag "columns",
-          options_for_select(@query_column_names - ['id']),
+          options_for_select(@query_column_names - ['id', 'description']),
           :multiple => true, class: "selectize" %>
       <label><%= check_box_tag 'description', '1'%> <%= l(:field_description) %></label>
       <label><%= check_box_tag 'comments', '1' %> <%= l(:field_comments) %></label>
@@ -39,7 +39,7 @@
     <p>
       <span><%= l(:field_which_columns) %></span>
       <%= select_tag "columns",
-          options_for_select(@query_column_names - ['id']),
+          options_for_select(@query_column_names - ['id', 'description']),
           :multiple => true, class: "selectize" %>
       <label><%= check_box_tag 'description', '1' %> <%= l(:field_description) %></label>
       <label><%= check_box_tag 'comments', '1' %> <%= l(:field_comments) %></label>
@@ -58,8 +58,8 @@
 
 <div id="related-export" style="<%= @relations.blank? ? 'display: none;' : nil %>">
   <% other_formats_links do |f| %>
-    <%= f.link_to 'CSV', :url => {}, :onclick => "showModal('csv-related-export-options', '350px'); return false;" %>
-    <%= f.link_to 'XLSX', :url => {}, :onclick => "showModal('xlsx-related-export-options', '350px'); return false;" %>
+    <%= f.link_to 'CSV', :url => {}, :onclick => "showModal('csv-related-export-options', '400px'); return false;" %>
+    <%= f.link_to 'XLSX', :url => {}, :onclick => "showModal('xlsx-related-export-options', '400px'); return false;" %>
     <%= f.link_to 'PDF', :url => {controller: 'subtask_export', action: 'related', format: 'pdf'} %>
   <% end %>
 </div>
@@ -70,7 +70,7 @@
   <p><span></span>
     <span><%= l(:field_which_columns) %></span>
     <%= select_tag "columns",
-        options_for_select(@query_column_names - ['id']),
+        options_for_select(@query_column_names - ['id', 'description']),
         :multiple => true, class: "selectize" %>
     <label><%= check_box_tag 'description', '1'%> <%= l(:field_description) %></label>
     <label><%= check_box_tag 'comments', '1' %> <%= l(:field_comments) %></label>
@@ -92,7 +92,7 @@
   <p id="wstaw-all">
     <span><%= l(:field_which_columns) %></span>
     <%= select_tag "columns",
-        options_for_select(@query_column_names - ['id']),
+        options_for_select(@query_column_names - ['id', 'description']),
         :multiple => true, class: "selectize" %>
     <label><%= check_box_tag 'description', '1'%> <%= l(:field_description) %></label>
     <label><%= check_box_tag 'comments', '1' %> <%= l(:field_comments) %></label>

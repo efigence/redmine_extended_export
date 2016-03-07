@@ -12,7 +12,7 @@ class SubtaskExportControllerTest < ActionController::TestCase
     assert_equal "text/csv; header=present", response.content_type
     assert response.body.starts_with?("#")
     issues(:root).descendants.visible.pluck(:subject).each do |subject|
-      assert response.body.include?(subject), "subject not included"
+      assert response.body.include?(id), "id not included"
     end
   end
 
@@ -48,7 +48,7 @@ class SubtaskExportControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal "text/csv; header=present", response.content_type
     assert response.body.starts_with?("#")
-    assert response.body.include? issues(:related).subject
+    assert response.body.include? issues(:related).id
   end
 
   test "should get proper related tasks in xlsx" do
