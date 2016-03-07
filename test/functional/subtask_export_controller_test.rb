@@ -10,7 +10,8 @@ class SubtaskExportControllerTest < ActionController::TestCase
     get :subtasks, id: 1, format: 'csv', subject: '1'
     assert_response :success
     assert_equal "text/csv; header=present", response.content_type
-    assert response.body.starts_with?("#")
+    assert response.body.starts_with?("L.p.")
+    assert response.body.include?("#")
     issues(:root).descendants.visible.pluck(:id).each do |id|
       assert response.body.include?(id.to_s), "id not included"
     end
@@ -47,7 +48,8 @@ class SubtaskExportControllerTest < ActionController::TestCase
     get :related, id: 5, format: 'csv', subject: '1'
     assert_response :success
     assert_equal "text/csv; header=present", response.content_type
-    assert response.body.starts_with?("#")
+    assert response.body.starts_with?("L.p.")
+    assert response.body.include?("#")
     assert response.body.include? issues(:related).id.to_s
   end
 

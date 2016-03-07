@@ -24,7 +24,8 @@ class IssuesControllerTest < ActionController::TestCase
     get :index, format: 'csv', comments: '1'
     assert_response :success
     assert_equal "text/csv; header=present", response.content_type
-    assert response.body.starts_with?("#,")
+    assert response.body.starts_with?("L.p.")
+    assert response.body.include? '#,'
     assert response.body.include? 'Comment'
     assert response.body.include? journals(:comment).notes
   end
