@@ -12,7 +12,7 @@ class SubtaskExportControllerTest < ActionController::TestCase
     assert_equal "text/csv; header=present", response.content_type
     assert response.body.starts_with?("#")
     issues(:root).descendants.visible.pluck(:id).each do |id|
-      assert response.body.include?(id), "id not included"
+      assert response.body.include?(id.to_s), "id not included"
     end
   end
 
