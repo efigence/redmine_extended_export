@@ -9,8 +9,9 @@ cache:
 rvm:
   - 2.1.3
   - 2.2.2
+  - 2.3.4
 env:
-  - REDMINE_VERSION=3.0.3 VERBOSE=no DB=mysql
+  - REDMINE_VERSION=3.2.9 VERBOSE=no DB=mysql
 script:
   - export PLUGIN=redmine_extended_export
   - export WORKSPACE=$(pwd)/workspace

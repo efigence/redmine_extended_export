@@ -13,7 +13,7 @@ module RedmineExtendedExport
 
       module InstanceMethods
         def comments(include_private=false)
-          comments = self.journals.where('notes IS NOT NULL AND notes != ""')
+          comments = self.journals.includes(:user).where('notes IS NOT NULL AND notes != ""')
           if !include_private
             comments = comments.where(private_notes: false )
           end

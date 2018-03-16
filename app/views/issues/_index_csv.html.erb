@@ -10,16 +10,17 @@
 
 <div id="xlsx-export-options" style="display:none;">
   <h3 class="title"><%= l(:label_export_options, :export_format => 'XLSX') %></h3>
-  <%= form_tag(params.merge({:format => 'xlsx',:page=>nil, :per_page=>nil}), :method => :get, :id => 'xlsx-export-form') do %>
+  <%= form_tag(_project_issues_path(@project, format: 'xlsx'), method: :get, id: 'csv-export-form') do %>
+  <%= query_as_hidden_field_tags(@query) %>
   <p>
-    <label><%= radio_button_tag 'columns', '', true %> <%= l(:description_selected_columns) %></label><br />
-    <label><%= radio_button_tag 'columns', 'all' %> <%= l(:description_all_columns) %></label>
+    <label><%= radio_button_tag 'c[]', '', true %> <%= l(:description_selected_columns) %></label><br />
+    <label><%= radio_button_tag 'c[]', 'all_inline' %> <%= l(:description_all_columns) %></label>
   </p>
   <p>
-    <label><%= check_box_tag 'description', '1', @query.has_column?(:description) %> <%= l(:field_description) %></label>
-    <label><%= check_box_tag 'comments', '1', @query.has_column?(:comments) %> <%= l(:field_comments) %></label>
+    <label><%= check_box_tag 'c[]', 'description', @query.has_column?(:description) %> <%= l(:field_description) %></label>
+    <label><%= check_box_tag 'c[]', 'last_notes', @query.has_column?(:comments) %> <%= l(:field_comments) %></label>
   </p>
-  <% if @issue_count > Setting.issues_export_limit.to_i %>
+  <% if @issue_count && @issue_count > Setting.issues_export_limit.to_i %>
   <p class="icon icon-warning">
     <%= l(:setting_issues_export_limit) %>: <%= Setting.issues_export_limit.to_i %>
   </p>

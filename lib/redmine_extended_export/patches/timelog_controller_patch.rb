@@ -21,13 +21,10 @@ module RedmineExtendedExport
         end
 
         def render_extended_format
-          @query = TimeEntryQuery.build_from_params(params, :project => @project, :name => '_')
-
-          sort_init(@query.sort_criteria.empty? ? [['spent_on', 'desc']] : @query.sort_criteria)
-          sort_update(@query.sortable_columns)
-          scope = time_entry_scope(:order => sort_clause).
-            includes(:project, :user, :issue).
-            preload(:issue => [:project, :tracker, :status, :assigned_to, :priority])
+          @query = TimeEntryQuery.build_from_params(params, project: @project, name: '_')
+          scope = time_entry_scope.preload(
+            issue: %i[project tracker status assigned_to priority]
+          ).preload(:project, :user)
 
           respond_to do |format|
             format.xlsx {

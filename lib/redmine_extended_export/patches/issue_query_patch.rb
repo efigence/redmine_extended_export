@@ -28,6 +28,30 @@ module RedmineExtendedExport
         def add_issue_ids_filter(issue_ids)
           filters[:issue_ids] = {:values => issue_ids}
         end
+
+        # Returns the issue count by group or nil if query is not grouped
+        def issue_count_by_group
+          r = nil
+          if grouped?
+            begin
+              # Rails3 will raise an (unexpected) RecordNotFound if there's only a nil group value
+              r = Issue.visible.
+                joins(:status, :project).
+                joins(history_join_clause).
+                where(statement).
+                joins(joins_for_order_statement(group_by_statement)).
+                group(group_by_statement).
+                count
+            rescue ActiveRecord::RecordNotFound
+              r = {nil => issue_count}
+            end
+            c = group_by_column
+            if c.is_a?(QueryCustomFieldColumn)
+              r = r.keys.inject({}) {|h, k| h[c.custom_field.cast_value(k)] = r[k]; h}
+            end
+            r
+          end
+        end
       end
     end
   end

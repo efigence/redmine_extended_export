@@ -4,7 +4,7 @@ Redmine::Plugin.register :redmine_extended_export do
   name 'Redmine Extended Export plugin'
   author 'Rafał Lisowski, Jacek Grzybowski'
   description 'Export issues to xlsx, export subtasks and related issues to xlsx, pdf, etc.'
-  version '0.0.1'
+  version '0.0.2'
   url 'https://github.com/efigence/redmine_extended_export'
   author_url 'http://efigence.com'
 
