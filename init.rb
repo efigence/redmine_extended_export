@@ -18,6 +18,7 @@ ActionDispatch::Callbacks.to_prepare do
   require 'redmine_extended_export/hooks/show_issue_hook'
   require 'redmine_extended_export/hooks/issues_index_hook'
   require 'redmine_extended_export/hooks/timelog_index_hook'
+  require 'redmine_extended_export/hooks/wiki_show_hook'
   require 'redmine/export/pdf/timelog_pdf_helper'
 
   IssueQuery.send(:include, RedmineExtendedExport::Patches::IssueQueryPatch)
