@@ -20,11 +20,13 @@ ActionDispatch::Callbacks.to_prepare do
   require 'redmine_extended_export/hooks/timelog_index_hook'
   require 'redmine_extended_export/hooks/wiki_show_hook'
   require 'redmine/export/pdf/timelog_pdf_helper'
+  require 'redmine/export/odt/wiki_odt_helper'
 
   IssueQuery.send(:include, RedmineExtendedExport::Patches::IssueQueryPatch)
   QueriesHelper.send(:include, RedmineExtendedExport::Patches::QueriesHelperPatch)
   Issue.send(:include, RedmineExtendedExport::Patches::IssuePatch)
   IssuesController.send(:include, RedmineExtendedExport::Patches::IssuesControllerPatch)
   TimelogHelper.send(:include, RedmineExtendedExport::Patches::TimelogHelperPatch)
+  WikiHelper.send(:include, Redmine::Export::ODT::WikiOdtHelper)
   TimelogController.send(:include, RedmineExtendedExport::Patches::TimelogControllerPatch)
 end

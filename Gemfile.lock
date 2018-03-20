@@ -6,6 +6,11 @@ GEM
       mimemagic (~> 0.3)
       nokogiri (~> 1.8, >= 1.8.2)
       rubyzip (~> 1.2, >= 1.2.1)
+    dimensions (1.3.0)
+    html2odt (0.4.3)
+      dimensions
+      nokogiri
+      rubyzip
     htmlentities (4.3.4)
     mimemagic (0.3.2)
     mini_portile2 (2.3.0)
@@ -17,7 +22,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  axlsx (~> 3.0.0.pre)
+  axlsx (>= 2.0.1)
+  html2odt
 
 BUNDLED WITH
    1.15.4
