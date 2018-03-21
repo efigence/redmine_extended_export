@@ -23,7 +23,7 @@ PLATFORMS
 
 DEPENDENCIES
   axlsx (>= 2.0.1)
-  html2odt
+  html2odt (= 0.4.3)
 
 BUNDLED WITH
    1.15.4
