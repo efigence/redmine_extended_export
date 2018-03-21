@@ -30,7 +30,7 @@ module Redmine
           doc.data
         end
 
-        protected
+        private
 
         def html_for_page_hierarchy(pages, node = nil, level = 0)
           return "" if pages[node].blank?

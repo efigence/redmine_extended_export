@@ -27,6 +27,7 @@ ActionDispatch::Callbacks.to_prepare do
   Issue.send(:include, RedmineExtendedExport::Patches::IssuePatch)
   IssuesController.send(:include, RedmineExtendedExport::Patches::IssuesControllerPatch)
   TimelogHelper.send(:include, RedmineExtendedExport::Patches::TimelogHelperPatch)
-  WikiHelper.send(:include, Redmine::Export::ODT::WikiOdtHelper)
   TimelogController.send(:include, RedmineExtendedExport::Patches::TimelogControllerPatch)
+  WikiHelper.send(:include, Redmine::Export::ODT::WikiOdtHelper)
+  WikiController.send(:include, RedmineExtendedExport::Patches::WikiControllerPatch)
 end
