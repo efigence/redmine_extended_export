@@ -40,10 +40,12 @@ module Redmine
           pages[node].each do |page|
             html += "<hr/>\n" unless level == 0 && page == pages[node].first
 
-            html += textilizable(page.content, :text,
-                                               :only_path => false,
-                                               :edit_section_links => false,
-                                               :headings => false)
+            if page.content.present?
+              html += textilizable(page.content, :text,
+                                                 :only_path => false,
+                                                 :edit_section_links => false,
+                                                 :headings => false)
+            end
 
             html += html_for_page_hierarchy(pages, page.id, level + 1)
           end
