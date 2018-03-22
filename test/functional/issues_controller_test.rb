@@ -37,6 +37,12 @@ class IssuesControllerTest < ActionController::TestCase
     assert_not response.body.include? journals(:comment).notes
   end
 
+  test 'order should work properly in export' do
+    get :index, format: 'csv', sort: 'fixed_version,assigned_to,id:desc'
+    assert_response :success
+    assert_equal 'text/csv; header=present', response.content_type
+  end
+
   test "show page should have export links for subtasks if exist" do
     get :show, :id => 1
     assert_response :success
