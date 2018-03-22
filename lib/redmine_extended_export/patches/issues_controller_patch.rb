@@ -45,7 +45,8 @@ module RedmineExtendedExport
           @issue_count = @query.issue_count
           @issue_pages = Redmine::Pagination::Paginator.new @issue_count, @limit, params['page']
           @offset ||= @issue_pages.offset
-          @issues = @query.issues(order: sort_clause, offset: @offset, limit: @limit)
+          @issues = @query.issues(include: %i[assigned_to tracker priority category fixed_version],
+                                  order: sort_clause, offset: @offset, limit: @limit)
           @issue_count_by_group = @query.issue_count_by_group
 
           respond_to do |format|
