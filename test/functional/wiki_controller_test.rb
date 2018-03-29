@@ -24,6 +24,14 @@ class WikiControllerTest < ActionController::TestCase
     end
   end
 
+  test 'show should work with unprivileged user' do
+    project = projects(:projects_001)
+    project.update_attribute(:is_public, false)
+    @request.session[:user_id] = users(:unprivileged_user).id
+    get :show, project_id: project.id, version: 1
+    assert_response :forbidden
+  end
+
   test 'show should respond to ODT format' do
     get :show, project_id: @project_id, format: 'odt'
     assert_response :success

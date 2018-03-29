@@ -13,9 +13,9 @@ module RedmineExtendedExport
       def show_with_odt
         if User.current.allowed_to?(:export_wiki_pages, @project) &&
            params[:format] == 'odt'
-         send_file_headers! :type => 'application/vnd.oasis.opendocument.text',
-                            :filename => "#{@page.title}.odt"
-         render inline: "<%= raw wiki_page_to_odt(@page, @project) %>"
+          send_file_headers! :type => 'application/vnd.oasis.opendocument.text',
+                             :filename => "#{@page.title}.odt"
+          render inline: "<%= raw wiki_page_to_odt(@page, @project) %>"
         else
           show_without_odt
         end
