@@ -11,7 +11,7 @@ rvm:
   - 2.2.2
   - 2.3.4
 env:
-  - REDMINE_VERSION=3.2.9 VERBOSE=no DB=mysql
+  - REDMINE_VERSION=3.4.9 VERBOSE=no DB=mysql
 script:
   - export PLUGIN=redmine_extended_export
   - export WORKSPACE=$(pwd)/workspace
