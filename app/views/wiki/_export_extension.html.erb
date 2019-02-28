@@ -1,0 +1,13 @@
+<% if controller_name == 'wiki' && !@status %>
+  <% if action_name == 'show' %>
+    <% other_formats_links do |f| %>
+      <%= f.link_to 'ODT', url: { id: @page.title, format: 'odt' } %>
+    <% end %>
+  <% elsif action_name == 'index' %>
+    <% other_formats_links do |f| %>
+      <%= f.link_to 'ODT', url: { action: 'export', format: 'odt' } %>
+    <% end %>
+  <% end %>
+
+  <%= javascript_include_tag 'wiki_extension.js', plugin: 'redmine_extended_export' %>
+<% end %>

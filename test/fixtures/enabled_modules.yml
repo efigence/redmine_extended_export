@@ -35,3 +35,7 @@ enabled_modules_017:
   name: calendar
   project_id: 1
   id: 17
+enabled_modules_018:
+  name: wiki
+  project_id: 1
+  id: 18
